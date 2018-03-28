@@ -61,12 +61,12 @@ class Tablify{
 		if($settings){
 			$settings = $settings + config('tablify.number', []);
 		}else{
-			$settings = [];
+			$settings = config('tablify.number', []);
 		}
 		if($headerSettings){
-			$headerSettings = $headerSettings + config('tablify.number.header');
+			$headerSettings = $headerSettings + config('tablify.number.header', []);
 		}else{
-			$headerSettings = [];
+			$headerSettings = config('tablify.number.header', []);
 		}
 
 		$this->parserObjects[] = new ParseNumber($headerName, $binding, $settings, $headerSettings);
@@ -77,13 +77,13 @@ class Tablify{
 		if($settings){
 			$settings = $settings + config('tablify.currency', []);
 		}else{
-			$settings = [];
+			$settings = config('tablify.currency', []);
 		}
 
 		if($headerSettings){
 			$headerSettings = $headerSettings + config('tablify.currency.header');
 		}else{
-			$headerSettings = [];
+			$headerSettings = config('tablify.currency.header', []);
 		}
 
 
