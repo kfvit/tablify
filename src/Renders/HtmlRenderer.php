@@ -32,12 +32,16 @@ class HtmlRenderer implements Renderer{
 		foreach($this->data['rows'] as $row){
 			$html .= '<tr>';
 			foreach($this->data['headers'] as $header){
+				$found = false;
 				foreach($row as $key => $col){
 					if($header->getValue() == $key){
 						$html .= '<td '.$this->getClass($col).$this->getStyle($col).$this->getId($col).'>'.$col->getValue().'</td>';
-					}else{
-						$html .= '<td></td>';
+						$found = true;
+						break;
 					}
+				}
+				if(!$found){
+					$html .= '<td></td>';
 				}
 			}
 			$html .= '</tr>';
@@ -45,12 +49,16 @@ class HtmlRenderer implements Renderer{
 		if(count($this->data['sums'])){
 			$html .= '<tr>';
 			foreach($this->data['headers'] as $header){
+				$found = false;
 				foreach($this->data['sums'] as $key => $col){
 					if($header->getValue() == $key){
 						$html .= '<td '.$this->getClass($col).$this->getStyle($col).$this->getId($col).'><strong>'.$col->getValue().'</strong></td>';
-					}else{
-						$html .= '<td></td>';
+						$found = true;
+						break;
 					}
+				}
+				if(!$found){
+					$html .= '<td></td>';
 				}
 			}
 			$html .= '</tr>';

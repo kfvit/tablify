@@ -32,7 +32,7 @@ class Tablify{
 		$this->collection = $collection;
 	}
 
-	public function map($headerName, $binding, $settings = null, $headerSettings = null){
+	public function map($headerName, $binding, $settings = [], $headerSettings = []){
 		$this->parserObjects[] = new ParseObject($headerName, $binding, $settings, $headerSettings);
 		return $this;
 	}
@@ -42,31 +42,51 @@ class Tablify{
 		return $this;
 	}
 
-	public function headerColumn($headerName, $value, $settings = null){
-		$this->headerColumns[] = new ParseHeaderColumn($headerName, $value, $settings, null);
+	public function headerColumn($headerName, $value, $settings = []){
+		$this->headerColumns[] = new ParseHeaderColumn($headerName, $value, $settings, []);
 		return $this;
 	}
 
-	public function footerColumn($headerName, $value, $settings = null){
-		$this->footerColumns[] = new ParseFooterColumn($headerName, $value, $settings, null);
+	public function footerColumn($headerName, $value, $settings = []){
+		$this->footerColumns[] = new ParseFooterColumn($headerName, $value, $settings, []);
 		return $this;
 	}
 
-	public function text($headerName, $binding, $settings = null, $headerSettings = null){
+	public function text($headerName, $binding, $settings = [], $headerSettings = []){
 		$this->map($headerName, $binding, $settings, $headerSettings);
 		return $this;
 	}
 
-	public function number($headerName, $binding, $settings = null, $headerSettings = null){
-		$settings = $settings + config('tablify.number');
-		$headerSettings = $headerSettings + config('tablify.number.header');
+	public function number($headerName, $binding, $settings = [], $headerSettings = []){
+		if($settings){
+			$settings = $settings + config('tablify.number', []);
+		}else{
+			$settings = [];
+		}
+		if($headerSettings){
+			$headerSettings = $headerSettings + config('tablify.number.header');
+		}else{
+			$headerSettings = [];
+		}
+
 		$this->parserObjects[] = new ParseNumber($headerName, $binding, $settings, $headerSettings);
 		return $this;
 	}
 
-	public function currency($headerName, $binding, $settings = null, $headerSettings = null){
-		$settings = $settings + config('tablify.currency');
-		$headerSettings = $headerSettings + config('tablify.currency.header');
+	public function currency($headerName, $binding, $settings = [], $headerSettings = []){
+		if($settings){
+			$settings = $settings + config('tablify.currency', []);
+		}else{
+			$settings = [];
+		}
+
+		if($headerSettings){
+			$headerSettings = $headerSettings + config('tablify.currency.header');
+		}else{
+			$headerSettings = [];
+		}
+
+
 		$this->parserObjects[] = new ParseCurrency($headerName, $binding, $settings, $headerSettings);
 		return $this;
 	}
