@@ -1,5 +1,7 @@
 <?php
 use \Dialect\Tablify\Parsers\Parser;
+use  \Dialect\Tablify\Parsers\ParseHeaderColumn;
+use  \Dialect\Tablify\Parsers\ParseFooterColumn;
 class ParserTest extends \Dialect\Tablify\TestCase
 {
 
@@ -186,6 +188,51 @@ class ParserTest extends \Dialect\Tablify\TestCase
 		$this->assertEquals($settings['class'], $rows[1]['first']->getClass());
 		$this->assertEquals($settings['id'], $rows[1]['first']->getId());
 		$this->assertEquals($settings['style'], $rows[1]['first']->getStyle());
+	}
+
+	/** @test */
+	public function it_can_sum_rows(){
+		$collection = [
+			[
+				'int' => 5
+			],
+			[
+				'int' => 10
+			],
+			[
+				'int' => 15
+			]
+		];
+
+		$objects = [
+			$this->dummyObject('value', 'int'),
+		];
+		$parsedRows = Parser::parseRows($objects, $collection);
+		$headersToSum = ['value' => ['decimals' => 2]];
+
+		$sums = Parser::parseSumRows($parsedRows, $headersToSum);
+		$this->assertCount(1, $sums);
+		$this->assertEquals($sums['value']->getRawValue(), 30);
+
+	}
+	/** @test */
+	public function it_can_parse_header_columns(){
+		$header = str_random(5);
+		$value = str_random(10);
+		$headerColumn = new ParseHeaderColumn($header, $value, [], []);
+		$rows = Parser::parseRows([], [], [$headerColumn]);
+		$this->assertCount(1, $rows);
+		$this->assertEquals($rows[0][$header]->getValue(), $value);
+	}
+
+	/** @test */
+	public function it_can_parse_footer_columns(){
+		$header = str_random(5);
+		$value = str_random(10);
+		$footerColumn = new ParseFooterColumn($header, $value, [], []);
+		$rows = Parser::parseRows([], [], [], [$footerColumn]);
+		$this->assertCount(1, $rows);
+		$this->assertEquals($rows[0][$header]->getValue(), $value);
 	}
 
 }

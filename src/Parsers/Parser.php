@@ -1,6 +1,9 @@
 <?php
 namespace Dialect\Tablify\Parsers;
 
+use Dialect\Tablify\Objects\Column;
+use Dialect\Tablify\Objects\Sum;
+
 class Parser{
 
 
@@ -43,8 +46,17 @@ class Parser{
 		return false;
 	}
 
-	public static function parseRows($objects, $collection){
+	public static function parseRows($objects, $collection, $headerColumns = [], $footerColumns = []){
 		$rows = [];
+
+		$headerRow = [];
+		foreach($headerColumns as $headerColumn){
+			$headerRow = array_merge($headerRow, $headerColumn->parseRow(null));
+		}
+
+		if(count($headerRow)){
+			$rows[] = $headerRow;
+		}
 
 		foreach($collection as $item){
 			$mainRow = [];
@@ -61,7 +73,70 @@ class Parser{
 				$rows[] = $gr;
 			}
 		}
+
+		$footerRow = [];
+		foreach($footerColumns as $footerColumn){
+			$footerRow = array_merge($footerRow, $footerColumn->parseRow(null));
+		}
+
+		if(count($footerRow)){
+			$rows[] = $footerRow;
+		}
+
 		return $rows;
+	}
+
+	public static function parseSumRows($paredRows, $headersToSum){
+
+		$sums = [];
+		$headers = [];
+		//Init values to 0
+		foreach($headersToSum as $header => $settings){
+			if(is_array($settings)){
+				$headers[] = $header;
+				$sums[$header] = 0;
+			}else{
+				$headers[] = $settings;
+				$sums[$settings] = 0;
+			}
+		}
+
+		//sum
+		foreach($paredRows as $row){
+
+			foreach($headers as $header){
+				if(array_key_exists($header, $row)){
+					$sums[$header] += floatval($row[$header]->getRawValue());
+				}
+			}
+		}
+
+		$sumObjects = [];
+		//format and convert sums
+		foreach($sums as $header => $sum){
+			$settings = array_key_exists($header, $headersToSum) ? $headersToSum[$header] : [];
+			$sumObjects[$header] = new Sum(Parser::processSumValue($sum, $settings), $sum, Parser::getSumSettings('class', $settings), Parser::getSumSettings('style', $settings), Parser::getSumSettings('id', $settings));
+		}
+
+		return $sumObjects;
+	}
+
+	protected static function getSumSettings($settingsName, $settings){
+		if(array_key_exists($settingsName, $settings)) return $settings[$settingsName];
+
+		return null;
+	}
+
+	protected static function  processSumValue($value, $settings) {
+		$format = number_format($value, Parser::getSumSettings('decimals', $settings) ?: config('tablify.number.decimals'),
+			Parser::getSumSettings('decimal_point', $settings) ?: config('tablify.number.decimal_point'),
+			Parser::getSumSettings('thousands_separator', $settings) ?: config('tablify.number.thousands_separator'));
+
+		if( Parser::getSumSettings('currency_symbol_after', $settings)){
+			return $format.Parser::getSumSettings('currency_symbol', $settings);
+		}else{
+			return Parser::getSumSettings('currency_symbol', $settings).$format;
+		}
 	}
 
 
