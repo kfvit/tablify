@@ -42,6 +42,20 @@ class HtmlRenderer implements Renderer{
 			}
 			$html .= '</tr>';
 		}
+		if(count($this->data['sums'])){
+			$html .= '<tr>';
+			foreach($this->data['headers'] as $header){
+				foreach($this->data['sums'] as $key => $col){
+					if($header->getValue() == $key){
+						$html .= '<td '.$this->getClass($col).$this->getStyle($col).$this->getId($col).'><strong>'.$col->getValue().'</strong></td>';
+					}else{
+						$html .= '<td></td>';
+					}
+				}
+			}
+			$html .= '</tr>';
+		}
+
 		$html .= '</tbody>';
 		return $html;
 	}

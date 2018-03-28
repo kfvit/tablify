@@ -12,12 +12,12 @@ class ParseGroup{
 
 	public function parseHeaders(){
 
-		return Parser::parseHeaders($this->getParsers());
+		return Parser::parseHeaders($this->getParsers()['parsers']);
 	}
 
 	public function parseRows($item){
-
-		return Parser::parseRows($this->getParsers($item), $this->getCollection($item));
+		$parsers = $this->getParsers($item);
+		return Parser::parseRows($parsers['parsers'], $this->getCollection($item), $parsers['headerColumns'], $parsers['footerColumns']);
 	}
 
 	public function parseSettings($item){
@@ -28,10 +28,12 @@ class ParseGroup{
 
 		$tablify = new Tablify($this->getCollection($item));
 		call_user_func($this->closure, $tablify);
-		if($tablify->getParsers()){
-			return $tablify->getParsers();
-		}
-		return [];
+		return [
+			'parsers' => $tablify->getParsers(),
+			'headerColumns' => $tablify->getHeaderColumns(),
+			'footerColumns' => $tablify->getFooterColumns()
+		];
+
 	}
 
 	protected function getCollection($item){

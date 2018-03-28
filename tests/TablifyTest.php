@@ -42,6 +42,21 @@ class TablifyTest extends \Dialect\Tablify\TestCase
 		$this->assertCount(1, $tablify->getParsers());
 		$this->assertEquals(get_class($tablify->getParsers()[0]), 'Dialect\Tablify\Parsers\ParseNumber');
 	}
+	/** @test */
+	public function it_can_map_header_column(){
+		$collection = [];
+		$tablify = tablify($collection)->headerColumn('HeaderName', 'name');
+		$this->assertCount(1, $tablify->getHeaderColumns());
+		$this->assertEquals(get_class($tablify->getHeaderColumns()[0]), 'Dialect\Tablify\Parsers\ParseHeaderColumn');
+	}
+
+	/** @test */
+	public function it_can_map_fotter_column(){
+		$collection = [];
+		$tablify = tablify($collection)->footerColumn('HeaderName', 'name');
+		$this->assertCount(1, $tablify->getFooterColumns());
+		$this->assertEquals(get_class($tablify->getFooterColumns()[0]), 'Dialect\Tablify\Parsers\ParseFooterColumn');
+	}
 
 
 }

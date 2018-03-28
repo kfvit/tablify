@@ -1,6 +1,8 @@
 <?php
 namespace Dialect\Tablify;
 use Dialect\Tablify\Parsers\ParseCurrency;
+use Dialect\Tablify\Parsers\ParseFooterColumn;
+use Dialect\Tablify\Parsers\ParseHeaderColumn;
 use Dialect\Tablify\Parsers\ParseNumber;
 use Dialect\Tablify\Parsers\Parser;
 use Dialect\Tablify\Parsers\ParseObject;
@@ -15,9 +17,15 @@ use Dialect\Tablify\Renders\XlsxRenderer;
 class Tablify{
 	protected $parserObjects;
 	protected $collection;
+	protected $headersToSum;
+	protected $headerColumns;
+	protected $footerColumns;
 	function __construct($collection = null) {
+		$this->headerColumns = [];
+		$this->footerColumns = [];
 		$this->parserObjects = [];
 		$this->collection = $collection;
+		$this->headersToSum = [];
 	}
 
 	public function setCollection($collection){
@@ -31,6 +39,16 @@ class Tablify{
 
 	public function group($binding, $closure){
 		$this->parserObjects[] = new ParseGroup($binding, $closure);
+		return $this;
+	}
+
+	public function headerColumn($headerName, $value, $settings = null){
+		$this->headerColumns[] = new ParseHeaderColumn($headerName, $value, $settings, null);
+		return $this;
+	}
+
+	public function footerColumn($headerName, $value, $settings = null){
+		$this->footerColumns[] = new ParseFooterColumn($headerName, $value, $settings, null);
 		return $this;
 	}
 
@@ -53,11 +71,20 @@ class Tablify{
 		return $this;
 	}
 
+	public function sum($headersToSum){
+		$this->headersToSum = $headersToSum;
+		return $this;
+	}
+
 
 	protected function parse(){
+		$headers =  Parser::parseHeaders($this->parserObjects);
+		$rows = Parser::parseRows($this->parserObjects, $this->collection, $this->headerColumns, $this->footerColumns);
+		$sums = Parser::parseSumRows($rows, $this->headersToSum);
 		return [
-			'headers' => Parser::parseHeaders($this->parserObjects),
-			'rows' => Parser::parseRows($this->parserObjects, $this->collection)
+			'headers' => $headers,
+			'rows' => $rows,
+			'sums' => $sums
 		];
 	}
 
@@ -95,6 +122,14 @@ class Tablify{
 
 	public function getParsers(){
 		return $this->parserObjects;
+	}
+
+	public function getHeaderColumns(){
+		return $this->headerColumns;
+	}
+
+	public function getFooterColumns(){
+		return $this->footerColumns;
 	}
 
 }

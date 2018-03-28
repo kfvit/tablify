@@ -20,8 +20,9 @@ class ParseObject{
 	}
 
 	public function parseRow($item){
+		$values = $this->parseValue($item);
 		$settings = $this->parseSettings($this->settings, $item);
-		return [$this->header => new Column($this->parseValue($item), $settings['class'], $settings['style'], $settings['id'])];
+		return [$this->header => new Column($values['processed'], $values['raw'], $settings['class'], $settings['style'], $settings['id'])];
 	}
 
 	protected function parseSettings($settings, $item){
@@ -56,7 +57,7 @@ class ParseObject{
 			$value = $this->parseValueFromBinding($item);
 		}
 
-		return $this->process($value);
+		return ['processed' => $this->process($value), 'raw' => $value];
 
 
 	}

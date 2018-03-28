@@ -3,9 +3,10 @@ namespace Dialect\Tablify\Objects;
 
 abstract class Object{
 
-	protected $value, $class, $style, $id;
-	function __construct($value, $class = null, $style = null, $id = null) {
+	protected $value,$rawValue, $class, $style, $id;
+	function __construct($value, $rawValue, $class = null, $style = null, $id = null) {
 		$this->value = $value;
+		$this->rawValue = $rawValue;
 		$this->class = $class;
 		$this->style = $style;
 		$this->id = $id;
@@ -13,6 +14,10 @@ abstract class Object{
 
 	public function getValue(){
 		return $this->value;
+	}
+
+	public function getRawValue(){
+		return $this->rawValue;
 	}
 
 	public function getClass(){
