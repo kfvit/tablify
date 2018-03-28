@@ -81,7 +81,7 @@ class Tablify{
 		}
 
 		if($headerSettings){
-			$headerSettings = $headerSettings + config('tablify.currency.header');
+			$headerSettings = $headerSettings + config('tablify.currency.header', []);
 		}else{
 			$headerSettings = config('tablify.currency.header', []);
 		}
