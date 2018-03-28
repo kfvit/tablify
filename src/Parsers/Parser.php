@@ -114,6 +114,7 @@ class Parser{
 		$sumObjects = [];
 		//format and convert sums
 		foreach($sums as $header => $sum){
+
 			$settings = array_key_exists($header, $headersToSum) ? $headersToSum[$header] : [];
 			$sumObjects[$header] = new Sum(Parser::processSumValue($sum, $settings), $sum, Parser::getSumSettings('class', $settings), Parser::getSumSettings('style', $settings), Parser::getSumSettings('id', $settings));
 		}
@@ -123,7 +124,11 @@ class Parser{
 
 	protected static function getSumSettings($settingsName, $settings){
 		if($settingsName == 'class'){
-			if(array_key_exists($settingsName, $settings)) return $settings[$settingsName] + config('tablify.number.class', []);
+
+			if(array_key_exists($settingsName, $settings)){
+				return ($settings + config('tablify.number'))[$settingsName];
+			}
+			else return config('tablify.number.class');
 		}
 		if(array_key_exists($settingsName, $settings)) return $settings[$settingsName];
 
