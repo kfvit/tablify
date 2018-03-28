@@ -122,6 +122,9 @@ class Parser{
 	}
 
 	protected static function getSumSettings($settingsName, $settings){
+		if($settingsName == 'class'){
+			if(array_key_exists($settingsName, $settings)) return $settings[$settingsName] + config('tablify.number.class', []);
+		}
 		if(array_key_exists($settingsName, $settings)) return $settings[$settingsName];
 
 		return null;
