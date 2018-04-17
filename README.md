@@ -13,18 +13,14 @@ Publish config
 
 ## Usage
 
-´´php
+``php
+      #basic usage
+      tablify($collection)->text('Header', 'mapping')->toHtml();
 
-  
-  #basic usage
-  tablify($collection)->text('Header', 'mapping')->toHtml();
-  
-  //tablify automatically gets properties from data
-  tablify($articles)
-  ->text('Category', 'category.name')
-  ->text('Name', 'name')
-  ->currency('Price', 'price');
-  
-  //TODO: More
-  
-``
+      //tablify automatically gets properties from data
+      tablify($articles)
+      ->text('Category', 'category.name')
+      ->text('Name', 'name')
+      ->currency('Price', 'price');
+
+      //TODO: More
