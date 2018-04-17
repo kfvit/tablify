@@ -12,8 +12,7 @@ Publish config
     php artisan vendor:publish --provider="Dialect\Tablify\TablifyServiceProvider"
 
 ## Usage
-
-``php
+``` php
       #basic usage
       tablify($collection)->text('Header', 'mapping')->toHtml();
 
@@ -24,3 +23,4 @@ Publish config
       ->currency('Price', 'price');
 
       //TODO: More
+```
