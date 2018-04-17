@@ -21,6 +21,25 @@ Publish config
       ->text('Category', 'category.name')
       ->text('Name', 'name')
       ->currency('Price', 'price');
+      
+      //Or it can take a closure
+      ->text('popular', function($item){
+        return $item->sells > 5 ? 'Yes' : 'No';
+      });
 
-      //TODO: More
+      #groups
+      //if an item in the data contains a array itself you can loop over it using group
+      
+      tablify($categories)
+      ->text('Category', 'name')
+      ->group('articles', function($tablify){
+        //In here you can access the tablfiy builder for every article.
+      });
+      
+      #Settings
+      //TODO
+      
+      
+      
+      
 ```
