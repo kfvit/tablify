@@ -13,7 +13,7 @@ Publish config
 
 ## Usage
 
-``php
+´´php
 
   
   #basic usage
