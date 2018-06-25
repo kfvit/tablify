@@ -16,7 +16,7 @@ class ParseObject{
 
 	public function parseHeader(){
 		$settings = $this->parseSettings($this->headerSettings, null);
-		return new Header($this->header, $settings['class'], $settings['style'], $settings['id']);
+		return new Header($this->header, $this->header, $settings['class'], $settings['style'], $settings['id']);
 	}
 
 	public function parseRow($item){
