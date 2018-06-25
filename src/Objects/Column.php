@@ -1,6 +1,6 @@
 <?php
 namespace Dialect\Tablify\Objects;
 
-class Column extends Object{
+class Column extends TablifyObject{
 
 }
