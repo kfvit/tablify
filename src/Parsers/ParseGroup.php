@@ -37,6 +37,7 @@ class ParseGroup{
 	}
 
 	protected function getCollection($item){
+		if(!$item) return [];
 		if($this->binding instanceof  \Closure){
 			$collection = call_user_func($this->binding, $item);
 		}
