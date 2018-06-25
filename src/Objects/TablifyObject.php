@@ -1,7 +1,7 @@
 <?php
 namespace Dialect\Tablify\Objects;
 
-abstract class Object{
+abstract class TablifyObject{
 
 	protected $value,$rawValue, $class, $style, $id;
 	function __construct($value, $rawValue, $class = null, $style = null, $id = null) {
