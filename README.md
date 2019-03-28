@@ -5,7 +5,7 @@ Tablify makes creating data-tables in multiple formats easier.
 
 Install via composer
 
-    composer require dialect-katirneholm/tablify
+    composer require dialect-katrineholm/tablify
 
 Publish config
 
