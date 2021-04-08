@@ -1,19 +1,26 @@
 <?php
 namespace Dialect\Tablify\Renders;
 
-class HtmlRenderer implements Renderer{
+class HtmlRenderer implements Renderer {
     protected $data;
+
     public function __construct($data) {
         $this->data = $data;
     }
 
-    public function render($footer = null) {
+    public function render($footer = null, $header = null) {
         $class = config('tablify.html')['class'];
         $html = '';
+
+        if($header) {
+            $html .= "<h1>{$header}</h1>";
+        }
+
         if($footer) {
             $html .= $this->getFooterStyle();
             $html .= '<footer>'.$footer.'</footer>';
         }
+
         $html .= '<table class="'.$class.'">';
         $html .= $this->renderHeader();
         $html .= $this->renderBody();

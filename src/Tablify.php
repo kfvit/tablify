@@ -20,6 +20,8 @@ class Tablify{
     protected $headersToSum;
     protected $headerColumns;
     protected $footerColumns;
+    protected $mainHeader;
+
     function __construct($collection = null) {
         $this->headerColumns = [];
         $this->footerColumns = [];
@@ -96,7 +98,6 @@ class Tablify{
         return $this;
     }
 
-
     protected function parse(){
         $headers =  Parser::parseHeaders($this->parserObjects);
         $rows = Parser::parseRows($this->parserObjects, $this->collection, $this->headerColumns, $this->footerColumns);
@@ -137,7 +138,7 @@ class Tablify{
     }
 
     public function toPdf($documentName = 'tablify', $footer = null){
-        return $this->render(new PdfRenderer($this->parse(), $documentName, $footer));
+        return $this->render(new PdfRenderer($this->parse(), $documentName, $footer, $this->mainHeader));
     }
 
     public function getParsers(){
@@ -152,4 +153,8 @@ class Tablify{
         return $this->footerColumns;
     }
 
+    public function mainHeader($header)
+    {
+        $this->mainHeader = $header;
+    }
 }

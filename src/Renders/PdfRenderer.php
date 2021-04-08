@@ -4,16 +4,22 @@ namespace Dialect\Tablify\Renders;
 use Barryvdh\DomPDF\Facade as PDF;
 
 class PdfRenderer extends HtmlRenderer {
-    protected $documentName, $data, $footer;
-    function __construct($data, $documentName = 'tablify', $footer = null) {
+
+    protected $documentName;
+    protected $data;
+    protected $footer;
+    protected $header;
+
+    function __construct($data, $documentName = 'tablify', $footer = null, $header = null) {
         $this->data = $data;
         $this->documentName = $documentName;
         $this->footer = $footer;
+        $this->header = $header;
     }
 
 
-    public function render($footer = null) {
-        $html = Parent::render($this->footer);
+    public function render($footer = null, $header = null) {
+        $html = Parent::render($this->footer, $this->header);
         $pdf = PDF::loadView("tablify::pdf", ["html" => $html]);
         return $pdf->download($this->documentName);
 

@@ -7,13 +7,15 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Facades\Excel;
 
 class XlsxRenderer extends HtmlRenderer {
-	protected $documentName, $data;
-	function __construct($data, $documentName = 'tablify') {
+	protected $documentName;
+	protected $data;
+
+	public function __construct($data, $documentName = 'tablify') {
 		$this->data = $data;
 		$this->documentName = $documentName;
 	}
 
-	public function render(){
+	public function render($footer = null, $header = null){
 
 		$html = parent::render();
 
