@@ -14,9 +14,9 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Dialect Katrineholm",
-            "email": "katrineholm@dialect.se",
-            "homepage": "https://github.com/dialect-katrineholm",
+            "name": "KFV IT & Telecom AB",
+            "email": "info@kfvit.se",
+            "homepage": "https://github.com/kfvit",
             "role": "Developer"
         }
     ],
@@ -42,7 +42,7 @@
         }
     },
     "require": {
-        "maatwebsite/excel": "^3.0",
-        "barryvdh/laravel-dompdf": "^0.8.2"
+        "maatwebsite/excel": "^3.1",
+        "barryvdh/laravel-dompdf": "^1.0"
     }
 }

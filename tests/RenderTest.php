@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 class RenderTest extends \Dialect\Tablify\TestCase
 {
 
@@ -7,12 +9,12 @@ class RenderTest extends \Dialect\Tablify\TestCase
 	public function it_can_render_to_array(){
 		$collection = [
 			[
-				"first_name" => str_random(2),
-				"last_name" => str_random(3)
+				"first_name" => Str::random(2),
+				"last_name" => Str::random(3)
 			],
 			[
-				"first_name" => str_random(4),
-				"last_name" => str_random(5)
+				"first_name" => Str::random(4),
+				"last_name" => Str::random(5)
 			]
 		];
 
@@ -25,12 +27,12 @@ class RenderTest extends \Dialect\Tablify\TestCase
 	public function it_can_render_to_json(){
 		$collection = [
 			[
-				"first_name" => str_random(2),
-				"last_name" => str_random(3)
+				"first_name" => Str::random(2),
+				"last_name" => Str::random(3)
 			],
 			[
-				"first_name" => str_random(4),
-				"last_name" => str_random(5)
+				"first_name" => Str::random(4),
+				"last_name" => Str::random(5)
 			]
 		];
 
@@ -44,12 +46,12 @@ class RenderTest extends \Dialect\Tablify\TestCase
 	public function it_can_render_to_html(){
 		$collection = [
 			[
-				"first_name" => str_random(2),
-				"last_name" => str_random(3)
+				"first_name" => Str::random(2),
+				"last_name" => Str::random(3)
 			],
 			[
-				"first_name" => str_random(4),
-				"last_name" => str_random(5)
+				"first_name" => Str::random(4),
+				"last_name" => Str::random(5)
 			]
 		];
 		$settings = [
@@ -69,12 +71,12 @@ class RenderTest extends \Dialect\Tablify\TestCase
 	public function it_can_render_to_xlsx(){
 		$collection = [
 			[
-				"first_name" => str_random(2),
-				"last_name" => str_random(3)
+				"first_name" => Str::random(2),
+				"last_name" => Str::random(3)
 			],
 			[
-				"first_name" => str_random(4),
-				"last_name" => str_random(5)
+				"first_name" => Str::random(4),
+				"last_name" => Str::random(5)
 			]
 		];
 		$settings = [
@@ -93,12 +95,12 @@ class RenderTest extends \Dialect\Tablify\TestCase
 	public function it_can_render_pdf(){
 		$collection = [
 			[
-				"first_name" => str_random(2),
-				"last_name" => str_random(3)
+				"first_name" => Str::random(2),
+				"last_name" => Str::random(3)
 			],
 			[
-				"first_name" => str_random(4),
-				"last_name" => str_random(5)
+				"first_name" => Str::random(4),
+				"last_name" => Str::random(5)
 			]
 		];
 		$settings = [

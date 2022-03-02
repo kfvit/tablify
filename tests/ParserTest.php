@@ -1,15 +1,17 @@
 <?php
 use \Dialect\Tablify\Parsers\Parser;
-use  \Dialect\Tablify\Parsers\ParseHeaderColumn;
-use  \Dialect\Tablify\Parsers\ParseFooterColumn;
+use \Dialect\Tablify\Parsers\ParseHeaderColumn;
+use \Dialect\Tablify\Parsers\ParseFooterColumn;
+use Illuminate\Support\Str;
+
 class ParserTest extends \Dialect\Tablify\TestCase
 {
 
 	/** @test */
 	public function it_can_parse_headers_of_objects(){
-		$header1 = str_random(3);
-		$header2 = str_random(4);
-		$header3 = str_random(5);
+		$header1 = Str::random(3);
+		$header2 = Str::random(4);
+		$header3 = Str::random(5);
 		$objects = [
 			$this->dummyObject($header1),
 			$this->dummyObject($header2),
@@ -25,13 +27,13 @@ class ParserTest extends \Dialect\Tablify\TestCase
 
 	/** @test */
 	public function it_can_parse_headers_of_group(){
-		$header1 = str_random(3);
-		$header2 = str_random(4);
-		$header3 = str_random(5);
+		$header1 = Str::random(3);
+		$header2 = Str::random(4);
+		$header3 = Str::random(5);
 		$closure = function($tablify)use ($header1, $header2, $header3){
 			return $tablify->map($header1, '')->map($header2, '')->map($header3, '');
 		};
-		$group = $this->dummyGroup(str_random(5), $closure);
+		$group = $this->dummyGroup(Str::random(5), $closure);
 
 		$headers = Parser::parseHeaders([$group]);
 		$this->assertCount(3, $headers);
@@ -42,14 +44,14 @@ class ParserTest extends \Dialect\Tablify\TestCase
 
 	/** @test */
 	public function it_can_parse_headers_of_both_group_and_object(){
-		$header1 = str_random(3);
-		$header2 = str_random(4);
-		$header3 = str_random(5);
+		$header1 = Str::random(3);
+		$header2 = Str::random(4);
+		$header3 = Str::random(5);
 		$closure = function($tablify)use ($header2, $header3){
 			return $tablify->map($header2, '')->map($header3, '');
 		};
 		$object = $this->dummyObject($header1);
-		$group = $this->dummyGroup(str_random(5), $closure);
+		$group = $this->dummyGroup(Str::random(5), $closure);
 
 		$headers = Parser::parseHeaders([$object, $group]);
 		$this->assertCount(3, $headers);
@@ -60,7 +62,7 @@ class ParserTest extends \Dialect\Tablify\TestCase
 
 	/** @test */
 	public function it_can_only_add_the_same_header_once(){
-		$header = str_random(3);
+		$header = Str::random(3);
 
 		$objects = [
 			$this->dummyObject($header),
@@ -75,12 +77,12 @@ class ParserTest extends \Dialect\Tablify\TestCase
 	public function it_can_parse_objects_to_rows(){
 		$collection = [
 			[
-				"first_name" => str_random(2),
-				"last_name" => str_random(3)
+				"first_name" => Str::random(2),
+				"last_name" => Str::random(3)
 			],
 			[
-				"first_name" => str_random(4),
-				"last_name" => str_random(5)
+				"first_name" => Str::random(4),
+				"last_name" => Str::random(5)
 			]
 		];
 		$objects = [
@@ -104,12 +106,12 @@ class ParserTest extends \Dialect\Tablify\TestCase
 			[
 			'names' => [
 					[
-						"first_name" => str_random(2),
-						"last_name" => str_random(3)
+						"first_name" => Str::random(2),
+						"last_name" => Str::random(3)
 					],
 					[
-						"first_name" => str_random(4),
-						"last_name" => str_random(5)
+						"first_name" => Str::random(4),
+						"last_name" => Str::random(5)
 					]
 				]
 			]
@@ -132,15 +134,15 @@ class ParserTest extends \Dialect\Tablify\TestCase
 	public function it_can_parse_groups_and_objects_to_rows(){
 		$collection = [
 			[
-				'heading' => str_random(6),
+				'heading' => Str::random(6),
 				'names' => [
 					[
-						"first_name" => str_random(2),
-						"last_name" => str_random(3)
+						"first_name" => Str::random(2),
+						"last_name" => Str::random(3)
 					],
 					[
-						"first_name" => str_random(4),
-						"last_name" => str_random(5)
+						"first_name" => Str::random(4),
+						"last_name" => Str::random(5)
 					]
 				]
 			]
@@ -166,18 +168,18 @@ class ParserTest extends \Dialect\Tablify\TestCase
 	public function it_can_parse_settings(){
 		$collection = [
 			[
-				"first_name" => str_random(2),
-				"last_name" => str_random(3)
+				"first_name" => Str::random(2),
+				"last_name" => Str::random(3)
 			],
 			[
-				"first_name" => str_random(4),
-				"last_name" => str_random(5)
+				"first_name" => Str::random(4),
+				"last_name" => Str::random(5)
 			]
 		];
 		$settings = [
-			'class' => str_random(5),
-			'id' => str_random(6),
-			'style' => str_random(7),
+			'class' => Str::random(5),
+			'id' => Str::random(6),
+			'style' => Str::random(7),
 		];
 
 		$object = $this->dummyObject("first", "first_name" ,$settings);
@@ -217,8 +219,8 @@ class ParserTest extends \Dialect\Tablify\TestCase
 	}
 	/** @test */
 	public function it_can_parse_header_columns(){
-		$header = str_random(5);
-		$value = str_random(10);
+		$header = Str::random(5);
+		$value = Str::random(10);
 		$headerColumn = new ParseHeaderColumn($header, $value, [], []);
 		$rows = Parser::parseRows([], [], [$headerColumn]);
 		$this->assertCount(1, $rows);
@@ -227,8 +229,8 @@ class ParserTest extends \Dialect\Tablify\TestCase
 
 	/** @test */
 	public function it_can_parse_footer_columns(){
-		$header = str_random(5);
-		$value = str_random(10);
+		$header = Str::random(5);
+		$value = Str::random(10);
 		$footerColumn = new ParseFooterColumn($header, $value, [], []);
 		$rows = Parser::parseRows([], [], [], [$footerColumn]);
 		$this->assertCount(1, $rows);
