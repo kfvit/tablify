@@ -9,7 +9,7 @@ class HtmlRenderer implements Renderer {
     }
 
     public function render($footer = null, $header = null) {
-        $class = config('tablify.html')['class'];
+        $class = optional(config('tablify.html'))['class'];
         $html = '';
 
         if($header) {
