@@ -10,19 +10,16 @@
         "vue",
         "database"
     ],
-    "homepage": "https://github.com/dialect-katrineholm/tablify",
+    "homepage": "https://github.com/forss-it/tablify",
     "license": "MIT",
     "authors": [
         {
-            "name": "KFV IT & Telecom AB",
-            "email": "info@kfvit.se",
-            "homepage": "https://github.com/kfvit",
+            "name": "Forss IT AB",
+            "email": "info@forss.se",
+            "homepage": "https://github.com/forss-it",
             "role": "Developer"
         }
     ],
-    "require-dev": {
-        "orchestra/testbench": "~3.0"
-    },
     "autoload": {
         "psr-4": {
             "Dialect\\Tablify\\": "src"
@@ -43,6 +40,6 @@
     },
     "require": {
         "maatwebsite/excel": "^3.1",
-        "barryvdh/laravel-dompdf": "^1.0"
+        "barryvdh/laravel-dompdf": "^2.0"
     }
 }

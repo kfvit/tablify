@@ -1,7 +1,7 @@
 <?php
 namespace Dialect\Tablify\Renders;
 
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PdfRenderer extends HtmlRenderer {
 
@@ -20,7 +20,7 @@ class PdfRenderer extends HtmlRenderer {
 
     public function render($footer = null, $header = null) {
         $html = Parent::render($this->footer, $this->header);
-        $pdf = PDF::loadView("tablify::pdf", ["html" => $html]);
+        $pdf = Pdf::loadView("tablify::pdf", ["html" => $html]);
         return $pdf->download($this->documentName);
 
     }
