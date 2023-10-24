@@ -156,5 +156,6 @@ class Tablify{
     public function mainHeader($header)
     {
         $this->mainHeader = $header;
+        return $this;
     }
 }
